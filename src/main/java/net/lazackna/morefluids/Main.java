@@ -1,7 +1,11 @@
 package net.lazackna.morefluids;
 
 import net.lazackna.morefluids.setup.Registration;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.WaterFluid;
+import net.minecraft.item.MilkBucketItem;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -26,7 +30,7 @@ public class Main
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
         //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onServerStarting);
-        
+
         MinecraftForge.EVENT_BUS.register(this);
 
     }
