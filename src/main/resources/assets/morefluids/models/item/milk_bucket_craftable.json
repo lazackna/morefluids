@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "morefluids:items/milk_bucket_craftable"
+  }
+}

@@ -2,12 +2,17 @@ package net.lazackna.morefluids.objects.fluids;
 
 import net.lazackna.morefluids.setup.FluidSetup;
 import net.lazackna.morefluids.setup.ItemSetup;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
-import net.minecraft.item.MilkBucketItem;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -15,9 +20,11 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
 public class FluidMilk extends FlowingFluid {
+
+
     @Override
     public Fluid getFlowing() {
-        return FluidSetup.flowing_milk;
+        return FluidSetup.milk_flowing;
     }
 
     @Override
@@ -31,8 +38,9 @@ public class FluidMilk extends FlowingFluid {
     }
 
     @Override
-    protected void beforeDestroyingBlock(IWorld p_205580_1_, BlockPos p_205580_2_, BlockState p_205580_3_) {
-
+    protected void beforeDestroyingBlock(IWorld world, BlockPos pos, BlockState state) {
+        TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+        Block.dropResources(state, world, pos, tileentity);
     }
 
     @Override
@@ -42,7 +50,7 @@ public class FluidMilk extends FlowingFluid {
 
     @Override
     protected int getDropOff(IWorldReader p_204528_1_) {
-        return 5;
+        return 1;
     }
 
     @Override
@@ -51,8 +59,8 @@ public class FluidMilk extends FlowingFluid {
     }
 
     @Override
-    protected boolean canBeReplacedWith(FluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_) {
-        return false;
+    protected boolean canBeReplacedWith(FluidState state, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction) {
+        return direction == Direction.DOWN && !fluid.is(FluidTags.WATER);
     }
 
     @Override
@@ -78,5 +86,15 @@ public class FluidMilk extends FlowingFluid {
     @Override
     public int getAmount(FluidState p_207192_1_) {
         return 0;
+    }
+
+    @Override
+    public Fluid getFluid() {
+        return null;
+    }
+
+    @Override
+    public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
+        return false;
     }
 }
