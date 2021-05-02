@@ -23,7 +23,7 @@ public class FluidSetup {
 
     public static void register () {
 
-        milk = Registration.FLUIDS.register("milk_still", () -> );
+//        milk = Registration.FLUIDS.register("milk_still", () -> );
 
 
 
