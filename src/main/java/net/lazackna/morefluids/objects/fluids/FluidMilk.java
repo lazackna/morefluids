@@ -8,28 +8,36 @@ import net.minecraft.entity.Entity;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.biome.BiomeColors;
+import net.minecraftforge.fluids.FluidAttributes;
 
 public class FluidMilk extends FlowingFluid {
+
+    @Override
+    protected FluidAttributes createAttributes() {
+        return super.createAttributes();
+    }
 
 
     @Override
     public Fluid getFlowing() {
-        return FluidSetup.milk_flowing;
+        return FluidSetup.MILK_FLOWING;
     }
 
     @Override
     public Fluid getSource() {
-        return FluidSetup.milk;
+        return FluidSetup.MILK_SOURCE;
     }
 
     @Override
@@ -73,6 +81,7 @@ public class FluidMilk extends FlowingFluid {
         return 0;
     }
 
+
     @Override
     protected BlockState createLegacyBlock(FluidState p_204527_1_) {
         return null;
@@ -90,11 +99,30 @@ public class FluidMilk extends FlowingFluid {
 
     @Override
     public Fluid getFluid() {
-        return null;
+        return FluidSetup.haha.get();
     }
 
     @Override
     public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
         return false;
     }
+//    public static class FluidAttribute extends FluidAttributes {
+//
+//        protected FluidAttribute(Builder builder, Fluid fluid)
+//        {
+//            super(builder, fluid);
+//        }
+//
+//        @Override
+//        public int getColor(IBlockDisplayReader world, BlockPos pos)
+//        {
+//            return BiomeColors.getAverageWaterColor(world, pos) | 0xFF000000;
+//        }
+//
+//        public static Builder builder(ResourceLocation stillTexture, ResourceLocation flowingTexture) {
+//            return new Builder(stillTexture, flowingTexture, FluidAttribute::new);
+//
+//        }
+//    }
+
 }

@@ -16,7 +16,7 @@ public class ItemSetup {
         SILVER_INGOT = Registration.ITEMS.register("silver_ingot", () ->
                 new Item(new Item.Properties().tab(ItemGroup.TAB_MISC)));
         MILK_BUCKET = Registration.ITEMS.register("milk_bucket_craftable", () ->
-                new BucketItem(() -> FluidSetup.milk, new Item.Properties().tab(ItemGroup.TAB_MISC).stacksTo(1)));
+                new BucketItem(() -> FluidSetup.MILK_SOURCE, new Item.Properties().tab(ItemGroup.TAB_MISC).stacksTo(1)));
 //        MILK_BUCKET_CRAFTABLE = Registration.ITEMS.register("milk_bucket_craftable", () ->
 //                new Item(new Item.Properties().tab(ItemGroup.TAB_MISC).stacksTo(1)));
 

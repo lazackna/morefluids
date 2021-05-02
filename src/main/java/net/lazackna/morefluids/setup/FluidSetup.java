@@ -16,14 +16,16 @@ public class FluidSetup {
 
 
 
-    public static final FluidMilk milk = null;
-    public static final FluidMilk milk_flowing = null;
+    public static final FluidMilk MILK_SOURCE = null;
+    public static final FluidMilk MILK_FLOWING = null;
+
 
 
 
     public static void register () {
 
 //        milk = Registration.FLUIDS.register("milk_still", () -> );
+
 
 
 
