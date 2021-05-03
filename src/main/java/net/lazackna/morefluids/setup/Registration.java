@@ -3,10 +3,8 @@ package net.lazackna.morefluids.setup;
 import net.lazackna.morefluids.Main;
 import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,8 +23,8 @@ public class Registration {
         ITEMS.register(modEventBus);
         FLUIDS.register(modEventBus);
 
-        ItemSetup.register();
-        FluidSetup.register();
+        ItemList.register();
+        FluidList.register();
 
 
     }
