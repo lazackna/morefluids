@@ -42,6 +42,7 @@ public class FluidList {
     public static void register () {
 
         Registration.BLOCKS.register("milk", () -> MILK);
+
 //        milk = Registration.FLUIDS.register("milk_still", () -> );
 
 

@@ -1,6 +1,5 @@
 {
-
       "textures": {
-          "all": "morefluids:blocks/milk_still"
+          "all": "morefluids:textures/blocks/milk_still"
       }
 }

@@ -55,6 +55,7 @@ public class FluidMilk extends FlowingFluid {
 
     }
 
+
     @Nullable
     @OnlyIn(Dist.CLIENT)
     public IParticleData getDripParticle() {
@@ -75,8 +76,8 @@ public class FluidMilk extends FlowingFluid {
     }
 
     public BlockState createLegacyBlock(FluidState p_204527_1_) {
-        return Blocks.WATER.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_)));
-//        return this.defaultFluidState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_))).createLegacyBlock();
+        //return Blocks.WATER.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_)));
+        return FluidList.MILK.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_)));
     }
 
     @Override
@@ -106,10 +107,11 @@ public class FluidMilk extends FlowingFluid {
     }
 
 
+
     @Override
     protected FluidAttributes createAttributes() {
 
-        return FluidAttributes.builder(new ResourceLocation("blocks/milk_still"), new ResourceLocation("blocks/milk_flowing")).translationKey("block/milk").build(this);
+        return FluidAttributes.builder(new ResourceLocation("morefluids:blocks/milk_still"), new ResourceLocation("morefluids:blocks/milk_flowing")).translationKey("block/milk").build(this);
     }
 
     protected float getExplosionResistance() {
@@ -123,11 +125,11 @@ public class FluidMilk extends FlowingFluid {
             p_207184_1_.add(LEVEL);
         }
 
-        @Override
-        protected FluidAttributes createAttributes() {
-
-            return FluidAttributes.builder(new ResourceLocation("blocks/milk_still"), new ResourceLocation("blocks/milk_flowing")).translationKey("block/milk").build(this);
-        }
+//        @Override
+//        protected FluidAttributes createAttributes() {
+//
+//            return FluidAttributes.builder(new ResourceLocation("blocks/milk_still"), new ResourceLocation("blocks/milk_flowing")).translationKey("block/milk").build(this);
+//        }
 
         public int getAmount(FluidState p_207192_1_) {
             return p_207192_1_.getValue(LEVEL);
@@ -146,11 +148,11 @@ public class FluidMilk extends FlowingFluid {
             p_207184_1_.add(LEVEL);
         }
 
-        @Override
-        protected FluidAttributes createAttributes() {
-
-            return FluidAttributes.builder(new ResourceLocation("blocks/milk_still"), new ResourceLocation("blocks/milk_flowing")).translationKey("block/milk").build(this);
-        }
+//        @Override
+//        protected FluidAttributes createAttributes() {
+//
+//            return FluidAttributes.builder(new ResourceLocation("blocks/milk_still"), new ResourceLocation("blocks/milk_flowing")).translationKey("block/milk").build(this);
+//        }
         public int getAmount(FluidState p_207192_1_) {
             return 8;
         }
