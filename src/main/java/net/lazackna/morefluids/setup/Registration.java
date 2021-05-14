@@ -16,12 +16,14 @@ public class Registration {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MOD_ID);
     public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Main.MOD_ID);
 
+
     public static void register () {
 
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         FLUIDS.register(modEventBus);
+
 
         ItemList.register();
         FluidList.register();

@@ -2,16 +2,16 @@ package net.lazackna.morefluids.objects.fluids;
 
 import net.lazackna.morefluids.setup.FluidList;
 import net.lazackna.morefluids.setup.ItemList;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.*;
+import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
@@ -24,9 +24,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidAttributes;
 
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
 
 public class FluidMilk extends FlowingFluid {
@@ -49,12 +53,13 @@ public class FluidMilk extends FlowingFluid {
             if (p_204522_4_.nextInt(64) == 0) {
                 p_204522_1_.playLocalSound((double)p_204522_2_.getX() + 0.5D, (double)p_204522_2_.getY() + 0.5D, (double)p_204522_2_.getZ() + 0.5D, SoundEvents.WATER_AMBIENT, SoundCategory.BLOCKS, p_204522_4_.nextFloat() * 0.25F + 0.75F, p_204522_4_.nextFloat() + 0.5F, false);
             }
+        
         } else if (p_204522_4_.nextInt(10) == 0) {
             p_204522_1_.addParticle(ParticleTypes.UNDERWATER, (double)p_204522_2_.getX() + p_204522_4_.nextDouble(), (double)p_204522_2_.getY() + p_204522_4_.nextDouble(), (double)p_204522_2_.getZ() + p_204522_4_.nextDouble(), 0.0D, 0.0D, 0.0D);
         }
 
     }
-
+    
 
     @Nullable
     @OnlyIn(Dist.CLIENT)
@@ -163,4 +168,23 @@ public class FluidMilk extends FlowingFluid {
 
     }
 
+    @Override
+    public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
+        boolean inside = state.getType().isEntityInside(state, world, pos, entity, yToTest, tag, testingHead);
+
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                Collection<EffectInstance> list = livingEntity.getActiveEffects();
+
+                for (EffectInstance effectInstance : list) {
+                    Effect effect = effectInstance.getEffect();
+                    livingEntity.removeEffect(effect);
+                }
+
+
+            }
+
+        System.out.println(inside);
+        return inside;
+    }
 }

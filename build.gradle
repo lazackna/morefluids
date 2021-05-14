@@ -103,6 +103,8 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
+    //compile fileTree(dir: 'lib', includes: ['*.jar'])
+
 
     // compile against the JEI API but do not include it at runtime
     compileOnly fg.deobf("mezz.jei:jei-1.16.3:7.+:api")

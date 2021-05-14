@@ -1,17 +1,16 @@
 package net.lazackna.morefluids.setup;
 
 import net.lazackna.morefluids.objects.fluids.FluidMilk;
+import net.lazackna.morefluids.objects.fluids.Test;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.WaterFluid;
+import net.minecraft.fluid.*;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
@@ -34,10 +33,9 @@ public class FluidList {
 
 
 
-    public static final RegistryObject<FluidMilk.Source> MILK_SOURCE = Registration.FLUIDS.register("milk_still", FluidMilk.Source::new);
-    public static final RegistryObject<FluidMilk.Flowing> MILK_FLOWING = Registration.FLUIDS.register("milk_flowing", FluidMilk.Flowing::new);
-    public static final FlowingFluidBlock MILK = new FlowingFluidBlock(() -> FluidList.MILK_SOURCE.get(), AbstractBlock.Properties.of(Material.WATER).noDrops());
-
+    public static final RegistryObject<FlowingFluid> MILK_SOURCE = Registration.FLUIDS.register("milk_still", FluidMilk.Source::new);
+    public static final RegistryObject<FlowingFluid> MILK_FLOWING = Registration.FLUIDS.register("milk_flowing", FluidMilk.Flowing::new);
+    public static final FlowingFluidBlock MILK = new FlowingFluidBlock(FluidList.MILK_SOURCE, AbstractBlock.Properties.of(new Material.Builder(MaterialColor.WATER).noCollider().nonSolid().replaceable().liquid().build()));
 
     public static void register () {
 

@@ -1,5 +1,6 @@
 package net.lazackna.morefluids;
 
+
 import net.lazackna.morefluids.setup.Registration;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.WaterFluid;
@@ -18,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(Main.MOD_ID)
 public class Main
 {
+
     public static Main instance;
     public static final String MOD_ID = "morefluids";
     public static final Logger LOGGER = LogManager.getLogger();
@@ -34,6 +36,8 @@ public class Main
         MinecraftForge.EVENT_BUS.register(this);
 
     }
+
+
 
     private void setup (final FMLCommonSetupEvent event) {
 
