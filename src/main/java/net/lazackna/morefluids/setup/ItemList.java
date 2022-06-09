@@ -5,6 +5,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -19,6 +20,7 @@ public class ItemList {
 
 
     static void register () {
+        WaterFluid
         SILVER_INGOT = Registration.ITEMS.register("silver_ingot", () ->
                 new Item(new Item.Properties().tab(ItemGroup.TAB_MISC)));
         MILK_BUCKET = Registration.ITEMS.register("milk_bucket_craftable", () ->
