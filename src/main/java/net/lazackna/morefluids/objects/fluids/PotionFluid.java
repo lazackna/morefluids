@@ -6,15 +6,19 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -24,13 +28,16 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.Random;
 
-public class MilkFluid extends ForgeFlowingFluid {
-    protected MilkFluid(Properties properties) {
+public class PotionFluid extends ForgeFlowingFluid {
+
+    protected PotionFluid(Properties properties) {
         super(properties);
     }
 
@@ -38,6 +45,8 @@ public class MilkFluid extends ForgeFlowingFluid {
         return FluidList.MILK_FLOWING.get();
 
     }
+
+    private static Effect effect;
 
     public Fluid getSource() {
         return FluidList.MILK_SOURCE.get();
@@ -60,8 +69,6 @@ public class MilkFluid extends ForgeFlowingFluid {
 
     }
 
-
-
     @Nullable
     @OnlyIn(Dist.CLIENT)
     public IParticleData getDripParticle() {
@@ -82,7 +89,6 @@ public class MilkFluid extends ForgeFlowingFluid {
     }
 
     public BlockState createLegacyBlock(FluidState p_204527_1_) {
-        //return Blocks.WATER.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_)));
         return FluidList.MILK_BLOCK.get().defaultBlockState().setValue(FlowingFluidBlock.LEVEL, Integer.valueOf(getLegacyLevel(p_204527_1_)));
     }
 
@@ -113,13 +119,19 @@ public class MilkFluid extends ForgeFlowingFluid {
     }
 
     @Override
-    public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
-        return false;
+    protected FluidAttributes createAttributes() {
+        return FluidAttributes.builder(new ResourceLocation("morefluids:blocks/milk_still"), new ResourceLocation("morefluids:blocks/milk_flowing")).translationKey("block/milk").build(this);
     }
 
-    public static class Source extends MilkFluid {
-        public Source(Properties properties) {
+    protected float getExplosionResistance() {
+        return 100.0F;
+    }
+
+
+    public static class Flowing extends PotionFluid {
+        public Flowing(Properties properties, Effect _effect) {
             super(properties);
+            effect = _effect;
         }
 
         protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> p_207184_1_) {
@@ -128,38 +140,54 @@ public class MilkFluid extends ForgeFlowingFluid {
         }
 
         @Override
+        public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
+            return super.isEntityInside(state, world, pos, entity, yToTest, tag, testingHead);
+        }
+
         public int getAmount(FluidState p_207192_1_) {
-            return 8;
+            return p_207192_1_.getValue(LEVEL);
         }
 
-        @Override
-        public boolean isSource(FluidState p_207193_1_) {
-            return true;
-        }
-
-        @Override
-        public Fluid getSource() {
-            return super.getSource();
-        }
-    }
-    public static class Flowing extends MilkFluid {
-        public Flowing(Properties properties) {
-            super(properties);
-        }
-
-        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> p_207184_1_) {
-            super.createFluidStateDefinition(p_207184_1_);
-            p_207184_1_.add(LEVEL);
-        }
-
-        @Override
         public boolean isSource(FluidState p_207193_1_) {
             return false;
         }
 
-        @Override
-        public Fluid getSource() {
-            return super.getSource();
+    }
+
+    public static class Source extends PotionFluid {
+
+        public Source(Properties properties, Effect _effect) {
+            super(properties);
+            effect = _effect;
         }
+
+        protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> p_207184_1_) {
+            super.createFluidStateDefinition(p_207184_1_);
+            p_207184_1_.add(LEVEL);
+        }
+        @Override
+        public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
+            return super.isEntityInside(state, world, pos, entity, yToTest, tag, testingHead);
+        }
+
+        public int getAmount(FluidState p_207192_1_) {
+            return 8;
+        }
+
+        public boolean isSource(FluidState p_207193_1_) {
+            return true;
+        }
+
+    }
+
+    @Override
+    public boolean isEntityInside(FluidState state, IWorldReader world, BlockPos pos, Entity entity, double yToTest, Tag<Fluid> tag, boolean testingHead) {
+
+        if (entity instanceof LivingEntity) {
+            LivingEntity livingEntity = (LivingEntity) entity;
+            livingEntity.addEffect(new EffectInstance(effect));
+
+        }
+        return true;
     }
 }

@@ -37,8 +37,6 @@ public class Main
 
     }
 
-
-
     private void setup (final FMLCommonSetupEvent event) {
 
     }
